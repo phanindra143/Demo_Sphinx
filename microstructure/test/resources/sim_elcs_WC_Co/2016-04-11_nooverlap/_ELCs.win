@@ -1,0 +1,266 @@
+
+finish
+/clear
+/filname,ELCs
+/PREP7  
+
+!----------- INPUT: _________________
+
+resume,WC_50spheres_0605_00ovlp,db
+
+matnum_1 = 1  !(WC)
+matnum_2 = 2  !(Co)
+
+!_____________________________________
+
+
+
+
+!----------------------------------PROGRAMM----------------------
+
+!*** Definition material parameter ***
+emod_1=650      ! E_modulus in 'Hauptphase'=WCin GPa 
+pois_1=0.22	! Poissonzahl Hauptphase  
+emod_2=210		! E_modulus in 'Nebenphase'= Co   
+pois_2=0.31   	! Poissonzahl Nebenphase 
+     
+!*** Parameters ***
+nifx=6
+difx=1 
+
+!*** Attribute material to different phases ***
+! SiC:
+mp,ex,matnum_1,emod_1*1e9
+mp,prxy,matnum_1,pois_1
+! Si: 
+mp,ex,matnum_2,emod_2*1e9
+mp,prxy,matnum_2,pois_2
+! poren:
+!mp,ex,10000,emod_2*1e9    !1e-4		
+!mp,prxy,10000,pois_2      !1e-4
+
+save,work,db,,
+
+
+*do,di,1,nifx,difx
+
+parsav,all,param1,fem
+resume,work,db,,,
+parres,new,param1,fem
+
+ifx=%di%
+
+!*** SET LOADS ***
+/prep7		!
+lsclear,all         !Löscht alle vorhandenen Randbedingungen
+
+!Stringvariable für Koordinatenrichtungen einführen
+
+v1='x'
+v2='y'
+v3='z'
+!
+*if,mod(ifx,3),eq,1,then
+  vx='x'
+  vy='y'
+  vz='z'
+*endif
+*if,mod(ifx,3),eq,2,then
+  vx='z'
+  vy='x'
+  vz='y'
+*endif
+*if,mod(ifx,3),eq,0,then
+  vx='y'
+  vy='z'
+  vz='x'
+*endif
+delver=L*1/200  !Längentoleranz für Selektion der Randknoten
+
+allsel,all
+finish
+/solu  
+
+if_inull=0
+*if,ifx,lt,4,then
+  if_inull=1
+*endif
+
+*if,if_inull,eq,1,then   
+ 
+ !!Innere Ebenen Verschiebung 0 setzen   
+
+  allsel,all  
+  nsel,s,loc,%vx%,0-delver,0+delver
+  d,all,u%vx%,0
+
+  allsel,all  
+  nsel,s,loc,%vy%,0-delver,0+delver
+  d,all,u%vy%,0
+
+  allsel,all  
+  nsel,s,LOC,%vz%,0-delver,0+delver
+  d,all,u%vz%,0
+
+ !! Knoten auf den Außenebenen %vx% = L und %vy% = 0 in Richtungen senkrecht 
+ !! zur Zugspannung koppeln (zwangsweise gleiche Verschiebung)
+
+  allsel,all  
+  nsel,s,loc,%vx%,L-delver,L+delver  
+  cp,2,u%vx%,all
+
+  allsel,all
+  nsel,s,loc,%vy%,L-delver,L+delver  
+  cp,3,u%vy%,all
+  
+  allsel,all
+  
+*endif
+
+delrot=(1.0e-4)*L       ! Shear strain
+delshi=(1.5e-4)*L     ! Tensile strain
+!
+*if,ifx,ge,4,then
+  
+  ! simple shear auf vy=0 und vy=l Ebenen, 
+  ! tensile strain auf vz=0 und vz=l Ebenen
+
+  ! Aussenflächen auswählen und Verschiebung setzen
+
+  nsel,s,ext 
+  D,all,u%vz%,0
+  NSEL,r,LOC,%vy%,-delver,+delver 
+  D,all,u%vx%,0
+
+  allsel,all
+  nsel,s,ext
+  NSEL,r,LOC,%vy%,L-delver,L+delver  
+  D,all,u%vx%,delrot
+  
+  allsel,all
+  nsel,s,ext 
+  NSEL,r,LOC,%vx%,-delver,+delver 
+  D,all,u%vy%,0
+  
+  allsel,all
+  nsel,s,ext 
+  NSEL,r,LOC,%vx%,L-delver,L+delver 
+  D,all,u%vy%,0
+  
+*else   ! (ifx,lt,4), also für tensile strain
+  
+  allsel,all
+  NSEL,s,LOC,%vz%,L-delver,L+delver  
+  D,all,u%vz%,delshi
+  
+*endif
+
+!*** SOLVE ***
+
+allsel
+/status,solu
+eqslv,jcg,1e-08	! JCG solver
+solve
+
+finish  
+/post1
+
+!*** SET POSTPROCESSING ***
+
+allsel,all
+esel,s,mat,,1     	!volumenanteil für mat.1 berechnen
+etable,e_vol1,volu,
+ssum
+*get,v_mat1,ssum,0,item,e_vol1
+etable,e_vol1,eras
+
+allsel,all
+esel,s,mat,,2		!volumenanteil für mat.9 berechnen 
+etable,e_vol9,volu,
+ssum
+*get,v_mat9,ssum,0,item,e_vol9
+etable,e_vol9,eras
+
+! Volumen des gesamten Würfels bestimmen (v_i) und Elementtabelle mit Volumen anlegen 
+
+allsel,all
+etable,e_vol,volu,
+etable,s_1,s,1
+smult,sv,s_1,e_vol
+ssum
+*get,v_i,ssum,0,item,e_vol
+v_ph1=v_mat1/v_i
+v_ph9=v_mat9/v_i
+
+*get,sv_i,ssum,0,item,sv
+f_z=sv_i/L**3                  !Durchschnittliche Zugspannung
+!
+v1='x'
+v2='y'
+v3='z'
+v4='xy'
+v5='yz'
+v6='xz'
+!
+vv1='xx'
+vv2='yy'
+vv3='zz'
+vv4='xy'
+vv5='yz'
+vv6='xz'
+!
+*do,ni,1,6
+  etable,e_el%ni%,epel,v%ni%
+  etable,s_el%ni%,s,v%ni%
+  smult,ev_i,e_el%ni%,e_vol
+  smult,sv_i,s_el%ni%,e_vol
+  ssum
+  *get,e_%ni%,ssum,0,item,ev_i
+  *get,s_%ni%,ssum,0,item,sv_i
+  vv=vv%ni%
+  e_%vv%=e_%ni%/v_i
+  f_%vv%=s_%ni%/v_i
+  !
+  etable,ev_i,eras
+  etable,sv_i,eras
+*enddo
+etable,eras
+
+!*if,ifx,eq,1,then
+!  /output,out_elc,out,,
+!  /output,term   
+!*endif
+
+/output,out_elc,out,,append,
+*vwrite,'ifx','fxx','fyy','fzz','fxy','fxz','fyz'
+ (7A15)
+*vwrite
+/%
+*vwrite,ifx,f_xx*1e-6,f_yy*1e-6,f_zz*1e-6,f_xy*1e-6,f_xz*1e-6,f_yz*1e-6,
+(7F15.5)
+*vwrite
+/%
+*vwrite,'ifx','exx','eyy','ezz','exy','exz','eyz',
+(7A15)
+*vwrite
+/%
+*vwrite,ifx,e_xx*1000,e_yy*1000,e_zz*1000,e_xy*1000,e_xz*1000,e_yz*1000,
+(7F15.5)
+*vwrite
+/%
+/output,term 
+
+*if,ifx,eq,6,then
+	/output,out_elc,out,,append,
+	*vwrite,v_ph1,v_ph9,
+(7F15.5)
+*vwrite
+/%
+	/output,term 
+*endif
+  
+!/%
+
+*enddo
+
+save,sol6_elc,db,,,

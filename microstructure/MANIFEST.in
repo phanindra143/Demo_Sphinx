@@ -1,0 +1,6 @@
+include bin/geo_val_parallel.exe
+include bin/geo_val_orig.exe
+include bin/VoxSM_2017_x64.exe
+include bin/tetview-win.exe
+include examples/*.py
+include examples/output/voxels.val

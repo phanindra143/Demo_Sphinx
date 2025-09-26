@@ -1,0 +1,24 @@
+            ifx                 q_x                 q_y                 q_z     
+  /% source: R:/166_320/Ablage_Simulationen/Modellbildung_Simulation_CMC-SiC_[Vorlauf+WiMi+MaVo]/04_04_2017_Modellierung_Matrix_mikro_ditt_[WiMi]/2_Waermeleitfähigket_SiC-Si\WLF-50SiC-Poren\12
+             3.00000      -1338960.73243        -20722.74510         33962.28196
+  /%
+            ifx                 dtx                 dty                 dtz     
+  /%
+             3.00000         15625.00000           -68.43526          -614.09651
+  /%
+            ifx                 q_x                 q_y                 q_z     
+  /%
+             2.00000        -23731.47126      -1386997.60520         -8806.90989
+  /%
+            ifx                 dtx                 dty                 dtz     
+  /%
+             2.00000           162.46295         15625.00000           -61.07932
+  /%
+            ifx                 q_x                 q_y                 q_z     
+  /%
+             1.00000         31151.53946        -25498.58871      -1337811.07924
+  /%
+            ifx                 dtx                 dty                 dtz     
+  /%
+             1.00000          -360.07426           246.98629         15625.00000
+  /%

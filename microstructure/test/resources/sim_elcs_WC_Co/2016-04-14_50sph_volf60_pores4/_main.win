@@ -1,0 +1,63 @@
+!created by  VoxSM [ISC,ml,2010]
+!gMesh (base): U:\ablagen\ME-Sim-MaVo\2016-04-14_50sph_volf60_pores4\2016-04-14_50sph_volf60_pores4
+
+!---------- header ----------
+finish
+/clear
+/Filname, mesh
+/prep7
+
+!ETs  (keep type-numbers!)
+et,1,solid187    ! 3D tet (4-10 nodes)
+et,2,SHELL157    ! GB-shell 
+et,3,SHELL157    ! RVE-shell (seperate delete)
+!et,4,Targe170    ! Targe
+!et,5,Conta174, !6! Conta (keyopt1=6: DOF=VOLT)
+!et,6,solid231    ! solid GB prisms
+
+real,1            ! Real(1)= Shell thickness (GB)
+MOpt,TetExpnd,2   ! < 3(!)
+Shpp,silent,on
+MshMid,2          !no Midnodes, prevent meshing-errors.  -> add later(!)
+
+!MPs: (MatNr.)
+!   '0' -> '10 000',	         = pores
+!   Shell/Plane -> '20 000'   = GBs in-plane conductivity
+!   CT: real-constant 'ecc'   = GBs through-plane conductance
+!   solid-GB = 100*PartMat    = GB lossy-Dielectric
+
+
+!---------- input ----------
+
+structFileName = '2016-04-14_50sph_volf60_pores4'
+L = 0.000192  !L-Box
+
+! 32627 nodes:
+/input,'1_nodes','win', 
+
+! 142962 GB + RVE Surf elements (triangles)
+/input,'2_SHELL_GB_RVE','win', 
+
+! 274 Vmesh CMs (particles)
+keepShells = 0   !keep(1)/delete(0) Shells in FVmesh,
+/input,'3_CMs_mesh','win',
+
+!3 Materials:
+!  10000
+!  1
+!  2
+
+!---------- end ----------
+
+esel,s,type,,3  !RVE-Boundary-Elements
+esel,a,type,,2  !GB-Shells
+edele,all  !delete selected Elements
+
+esel,s,type,,1 !all
+EMid,add   !add Midnodes to all (sel.) Elements
+
+ETdele,2,6      !needed DOFs only(!), delete '2-6'
+
+allsel
+save,structFileName,db,,model
+

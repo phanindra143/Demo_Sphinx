@@ -1,0 +1,5 @@
+Beispiel-Simulationen für Elastizität aus R:\166_320\Ablage_Simulationen\ME-Simulationen-MaVo-CS3
+
+(mit Ausnahme von 2019-09-04_150prism_vol<80,85,90>, da hier die Ergebnisse in out_elcs.out nicht reproduiziert werden können. 
+Grund ist vermutlich, dass damals mit einem anderen Mesh gerechnet wurde (siehe RVE#1.db in 2019-09-04_150prism_vol90). 
+Es ist aber nicht dokumentiert, wie dieser erzeugt wurde. Generierung des Mesh mit _main.win erzeugt einen anderen Mesh).

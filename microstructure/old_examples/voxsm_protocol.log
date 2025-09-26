@@ -1,0 +1,15 @@
+open_voxel_file: path=U:\01_Ravi_Phanindra\mpaut\old_examples\output\zta_10\frac_0.2\rve_0\voxels.val
+split_regions: 
+open_voxel_file: path=C:\Users\ravi\Desktop\mpaut\examples\output\zta_sphere_10_16\frac_0.16666666666666666\rve_0\voxels.val
+split_regions: 
+generate_mesh: 
+smooth: iterations=100, k_BP=0.02, lambd=auto, fix_vs_nn=1.2524999999999999e-07, mode=all
+smooth: iterations=100, k_BP=0.02, lambd=auto, fix_vs_nn=1.2524999999999999e-07, mode=edges
+smooth: iterations=100, k_BP=0.02, lambd=auto, fix_vs_nn=1.2524999999999999e-07, mode=faces
+open_voxel_file: path=C:\Users\ravi\Desktop\mpaut\examples\output\zta_sphere_10_16\frac_0.16666666666666666\voxels.val
+open_voxel_file: path=C:\Users\ravi\Desktop\mpaut\examples\output\zta_sphere_10_16\frac_0.16666666666666666\rve_0\voxels.val
+print_particles: 
+print_materials: 
+split_regions: 
+generate_mesh: 
+smooth: iterations=100, k_BP=0.02, lambd=auto, fix_vs_nn=1.2524999999999999e-07, mode=all

@@ -1,0 +1,11 @@
+! 13:52:27  19.04.2021
+!
+!
+! Direction of main axis of 0 particles
+!
+*dim,direct1,array,0,3
+!
+! Direction of second axis of 0 particles
+!
+*dim,direct2,array,0,3
+/eof

@@ -1,0 +1,101 @@
+[2021-05-12 16:43:47,499 - VoxSM status - DEBUG] Launching VoxSM executable at 'U:\01_Ravi_Phanindra\mpaut\old_examples\..\bin\VoxSM_2017_x64.exe'
+[2021-05-12 16:43:47,515 - VoxSM status - INFO] Opening voxel file at path='U:\01_Ravi_Phanindra\mpaut\old_examples\output\zta_10\frac_0.2\rve_0\voxels.val'.
+[2021-05-12 16:43:49,820 - VoxSM status - DEBUG] Waiting for target_output='load  VOX ...done' with old_lines_count=3.
+[2021-05-12 16:43:50,559 - VoxSM status - INFO] Splitting regions.
+[2021-05-12 16:43:50,575 - VoxSM status - DEBUG] Switching to tab 0
+[2021-05-12 16:43:51,708 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='split VOX:' to appear
+[2021-05-12 16:43:52,212 - VoxSM status - DEBUG] Pressing confirm button with confirm_btn_text='OK'
+[2021-05-12 16:43:52,243 - VoxSM status - DEBUG] Waiting for target_output='split VOX::regions ...done' with old_lines_count=11.
+[2021-05-12 16:51:47,003 - VoxSM status - DEBUG] Launching VoxSM executable at 'C:\Users\ravi\Desktop\mpaut\examples\..\bin\VoxSM_2017_x64.exe'
+[2021-05-12 16:51:47,019 - VoxSM status - INFO] Opening voxel file at path='C:\Users\ravi\Desktop\mpaut\examples\output\zta_sphere_10_16\frac_0.16666666666666666\rve_0\voxels.val'.
+[2021-05-12 16:51:49,347 - VoxSM status - DEBUG] Waiting for target_output='load  VOX ...done' with old_lines_count=3.
+[2021-05-12 16:51:50,229 - VoxSM status - INFO] Splitting regions.
+[2021-05-12 16:51:50,249 - VoxSM status - DEBUG] Switching to tab 0
+[2021-05-12 16:51:51,383 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='split VOX:' to appear
+[2021-05-12 16:51:51,931 - VoxSM status - DEBUG] Pressing confirm button with confirm_btn_text='OK'
+[2021-05-12 16:51:51,970 - VoxSM status - DEBUG] Waiting for target_output='split VOX::regions ...done' with old_lines_count=11.
+[2021-05-12 16:51:52,770 - VoxSM status - INFO] Generating mesh.
+[2021-05-12 16:51:52,786 - VoxSM status - DEBUG] Switching to tab 0
+[2021-05-12 16:51:53,952 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='confirm' to appear
+[2021-05-12 16:51:54,449 - VoxSM status - DEBUG] Pressing confirm button with confirm_btn_text='OK'
+[2021-05-12 16:51:54,480 - VoxSM status - DEBUG] Waiting for target_output='scan Grid ...done' with old_lines_count=15.
+[2021-05-12 16:51:55,171 - VoxSM status - INFO] Performing adaptive mesh smoothing.
+[2021-05-12 16:51:55,181 - VoxSM status - DEBUG] Parameters for adaptive mesh smoothing: eL_min_factor=0.75
+[2021-05-12 16:51:55,186 - VoxSM status - DEBUG] Obtaining Fs statistics.
+[2021-05-12 16:51:55,191 - VoxSM status - DEBUG] Switching to tab 1
+[2021-05-12 16:51:57,112 - VoxSM status - DEBUG] Waiting for target_output='fQ' with old_lines_count=22.
+[2021-05-12 16:51:57,967 - VoxSM status - DEBUG] fs_statistics = {'eL_max': 1.41e-06,
+ 'eL_min': 1.67e-07,
+ 'fA_max': 5e-13,
+ 'fA_min': 2.08e-14,
+ 'fQ_max': 0.453634,
+ 'fQ_min': 0.247656}
+[2021-05-12 16:51:57,967 - VoxSM status - INFO] Smoothing mesh.
+[2021-05-12 16:51:57,985 - VoxSM status - DEBUG] options for smooth: iterations=100, k_BP=0.02, lambd=auto, fix_vs_nn=1.2524999999999999e-07, mode=all
+[2021-05-12 16:51:57,985 - VoxSM status - DEBUG] Switching to tab 1
+[2021-05-12 16:52:00,536 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='confirm smooth parameters:' to appear
+[2021-05-12 16:52:15,526 - VoxSM status - DEBUG] Pressing confirm button with confirm_btn_text='OK'
+[2021-05-12 16:52:15,557 - VoxSM status - DEBUG] Waiting for target_output='iterate ...done' with old_lines_count=27.
+[2021-05-12 16:52:17,962 - VoxSM status - DEBUG] Obtaining Fs statistics.
+[2021-05-12 16:52:17,962 - VoxSM status - DEBUG] Switching to tab 1
+[2021-05-12 16:52:19,869 - VoxSM status - DEBUG] Waiting for target_output='fQ' with old_lines_count=35.
+[2021-05-12 16:52:20,726 - VoxSM status - DEBUG] fs_statistics = {'eL_max': 1.29e-06,
+ 'eL_min': 1.08e-07,
+ 'fA_max': 3.08e-13,
+ 'fA_min': 5.89e-15,
+ 'fQ_max': 0.450104,
+ 'fQ_min': 0.107816}
+[2021-05-12 16:52:20,736 - VoxSM status - INFO] Smoothing mesh.
+[2021-05-12 16:52:20,746 - VoxSM status - DEBUG] options for smooth: iterations=100, k_BP=0.02, lambd=auto, fix_vs_nn=1.2524999999999999e-07, mode=edges
+[2021-05-12 16:52:20,756 - VoxSM status - DEBUG] Switching to tab 1
+[2021-05-12 16:52:23,257 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='confirm smooth parameters:' to appear
+[2021-05-12 16:52:33,659 - VoxSM status - DEBUG] Pressing confirm button with confirm_btn_text='OK'
+[2021-05-12 16:52:33,681 - VoxSM status - DEBUG] Waiting for target_output='iterate ...done' with old_lines_count=40.
+[2021-05-12 16:52:35,627 - VoxSM status - DEBUG] Obtaining Fs statistics.
+[2021-05-12 16:52:35,637 - VoxSM status - DEBUG] Switching to tab 1
+[2021-05-12 16:52:37,595 - VoxSM status - DEBUG] Waiting for target_output='fQ' with old_lines_count=48.
+[2021-05-12 16:52:38,452 - VoxSM status - DEBUG] fs_statistics = {'eL_max': 1.29e-06,
+ 'eL_min': 1.08e-07,
+ 'fA_max': 3.08e-13,
+ 'fA_min': 5.89e-15,
+ 'fQ_max': 0.450104,
+ 'fQ_min': 0.077281}
+[2021-05-12 16:52:38,462 - VoxSM status - INFO] Smoothing mesh.
+[2021-05-12 16:52:38,472 - VoxSM status - DEBUG] options for smooth: iterations=100, k_BP=0.02, lambd=auto, fix_vs_nn=1.2524999999999999e-07, mode=faces
+[2021-05-12 16:52:38,482 - VoxSM status - DEBUG] Switching to tab 1
+[2021-05-12 16:52:40,972 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='confirm smooth parameters:' to appear
+[2021-05-12 16:54:52,866 - VoxSM status - DEBUG] Launching VoxSM executable at 'C:\Users\ravi\Desktop\mpaut\examples\..\bin\VoxSM_2017_x64.exe'
+[2021-05-12 16:54:52,866 - VoxSM status - INFO] Opening voxel file at path='C:\Users\ravi\Desktop\mpaut\examples\output\zta_sphere_10_16\frac_0.16666666666666666\voxels.val'.
+[2021-05-12 16:54:52,888 - VoxSM status - ERROR] Voxel file not found at path='C:\Users\ravi\Desktop\mpaut\examples\output\zta_sphere_10_16\frac_0.16666666666666666\voxels.val'
+[2021-05-12 16:56:18,736 - VoxSM status - DEBUG] Launching VoxSM executable at 'C:\Users\ravi\Desktop\mpaut\examples\..\bin\VoxSM_2017_x64.exe'
+[2021-05-12 16:56:18,751 - VoxSM status - INFO] Opening voxel file at path='C:\Users\ravi\Desktop\mpaut\examples\output\zta_sphere_10_16\frac_0.16666666666666666\rve_0\voxels.val'.
+[2021-05-12 16:56:20,941 - VoxSM status - DEBUG] Waiting for target_output='load  VOX ...done' with old_lines_count=3.
+[2021-05-12 16:56:21,658 - VoxSM status - INFO] Printing particles.
+[2021-05-12 16:56:21,674 - VoxSM status - DEBUG] Switching to tab 0
+[2021-05-12 16:56:22,592 - VoxSM status - INFO] Printing materials.
+[2021-05-12 16:56:22,598 - VoxSM status - DEBUG] Switching to tab 0
+[2021-05-12 16:56:23,578 - VoxSM status - INFO] Splitting regions.
+[2021-05-12 16:56:23,594 - VoxSM status - DEBUG] Switching to tab 0
+[2021-05-12 16:56:24,734 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='split VOX:' to appear
+[2021-05-12 16:56:25,220 - VoxSM status - DEBUG] Pressing confirm button with confirm_btn_text='OK'
+[2021-05-12 16:56:25,251 - VoxSM status - DEBUG] Waiting for target_output='split VOX::regions ...done' with old_lines_count=11.
+[2021-05-12 16:56:26,053 - VoxSM status - INFO] Generating mesh.
+[2021-05-12 16:56:26,069 - VoxSM status - DEBUG] Switching to tab 0
+[2021-05-12 16:56:27,256 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='confirm' to appear
+[2021-05-12 16:56:27,755 - VoxSM status - DEBUG] Pressing confirm button with confirm_btn_text='OK'
+[2021-05-12 16:56:27,780 - VoxSM status - DEBUG] Waiting for target_output='scan Grid ...done' with old_lines_count=15.
+[2021-05-12 16:56:28,720 - VoxSM status - INFO] Performing adaptive mesh smoothing.
+[2021-05-12 16:56:28,735 - VoxSM status - DEBUG] Parameters for adaptive mesh smoothing: eL_min_factor=0.75
+[2021-05-12 16:56:28,740 - VoxSM status - DEBUG] Obtaining Fs statistics.
+[2021-05-12 16:56:28,745 - VoxSM status - DEBUG] Switching to tab 1
+[2021-05-12 16:56:30,598 - VoxSM status - DEBUG] Waiting for target_output='fQ' with old_lines_count=22.
+[2021-05-12 16:56:31,453 - VoxSM status - DEBUG] fs_statistics = {'eL_max': 1.41e-06,
+ 'eL_min': 1.67e-07,
+ 'fA_max': 5e-13,
+ 'fA_min': 2.08e-14,
+ 'fQ_max': 0.453634,
+ 'fQ_min': 0.247656}
+[2021-05-12 16:56:31,469 - VoxSM status - INFO] Smoothing mesh.
+[2021-05-12 16:56:31,485 - VoxSM status - DEBUG] options for smooth: iterations=100, k_BP=0.02, lambd=auto, fix_vs_nn=1.2524999999999999e-07, mode=all
+[2021-05-12 16:56:31,485 - VoxSM status - DEBUG] Switching to tab 1
+[2021-05-12 16:56:34,023 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='confirm smooth parameters:' to appear

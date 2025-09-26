@@ -1,0 +1,37 @@
+runfile('C:/Users/ravi/Desktop/mpaut/examples/examples_zta_generation.py', wdir='C:/Users/ravi/Desktop/mpaut/examples')
+Setting random seed 0
+Introducing 4 objects of type voronoi_polyeder
+Introducing 16 objects of type voronoi_polyeder
+Distributing objects
+Setting random seed 1
+Introducing 4 objects of type voronoi_polyeder
+Introducing 16 objects of type voronoi_polyeder
+Distributing objects
+Setting random seed 0
+Introducing 8 objects of type voronoi_polyeder
+Introducing 12 objects of type voronoi_polyeder
+Distributing objects
+Setting random seed 1
+Introducing 8 objects of type voronoi_polyeder
+Introducing 12 objects of type voronoi_polyeder
+Distributing objects
+Setting random seed 0
+Introducing 12 objects of type voronoi_polyeder
+Introducing 8 objects of type voronoi_polyeder
+Distributing objects
+Setting random seed 1
+Introducing 12 objects of type voronoi_polyeder
+Introducing 8 objects of type voronoi_polyeder
+Distributing objects
+Setting random seed 0
+Introducing 16 objects of type voronoi_polyeder
+Introducing 4 objects of type voronoi_polyeder
+Distributing objects
+Setting random seed 1
+Introducing 16 objects of type voronoi_polyeder
+Introducing 4 objects of type voronoi_polyeder
+Distributing objects
+
+
+
+Figures now render in the Plots pane by default. To make them also appear inline in the Console, uncheck "Mute Inline Plotting" under the Plots pane options menu. 

@@ -1,0 +1,84 @@
+running simulation of elasticity
+ db_file = rve_0_mesh.db
+ phase_mat_params = {'ZrO2': {'phase_number': 4, 'emod': 200, 'pois': 0.31}, 'Al2O3': {'phase_number': 10, 'emod': 380, 'pois': 0.23}}
+ options = {'solver_tolerance': 0.01}
+Setting up simulation with db_file = rve_0_mesh.db
+options = {'solver_tolerance': 0.01}
+assigning material parameters to material number 4: ex = 200000000000.0, prxy = 0.31
+assigning material parameters to material number 10: ex = 380000000000.0, prxy = 0.23
+ load step = 1
+starting solve ...
+solve finished!
+starting postprocessing ...
+computing phase volumes with phase_data = dict_values([{'phase_number': 4, 'emod': 200, 'pois': 0.31}, {'phase_number': 10, 'emod': 380, 'pois': 0.23}])
+postprocessing finished!
+resulting elasticity from load step 1: e = {'xx': -0.020587123229466823, 'yy': -0.02259800675473887, 'zz': 0.14397817099345245, 'xy': -0.004117598588688339, 'yz': -0.0012291092609747673, 'xz': -0.006765242173487876}, f = {'xx': 7.617068607126356, 'yy': 7.187227381567212, 'zz': 50.234747144550546, 'xy': -0.5712951178177613, 'yz': -0.13001510165057661, 'xz': -0.9758884013792499}
+ load step = 2
+starting solve ...
+solve finished!
+starting postprocessing ...
+computing phase volumes with phase_data = dict_values([{'phase_number': 4, 'emod': 200, 'pois': 0.31}, {'phase_number': 10, 'emod': 380, 'pois': 0.23}])
+postprocessing finished!
+resulting elasticity from load step 2: e = {'xx': -0.02040973486773234, 'yy': 0.14726275768106709, 'zz': -0.021917865968426934, 'xy': -0.01000958288762658, 'yz': -0.0027561935279945826, 'xz': -0.0025464917784142286}, f = {'xx': 8.297134860842146, 'yy': 51.931023226414425, 'zz': 7.909562605052402, 'xy': -1.6368824401713933, 'yz': -0.22701197384633662, 'xz': -0.3900149989960177}
+ load step = 3
+starting solve ...
+solve finished!
+starting postprocessing ...
+computing phase volumes with phase_data = dict_values([{'phase_number': 4, 'emod': 200, 'pois': 0.31}, {'phase_number': 10, 'emod': 380, 'pois': 0.23}])
+postprocessing finished!
+resulting elasticity from load step 3: e = {'xx': 0.14239550294365705, 'yy': -0.021652034221747996, 'zz': -0.02168482060973344, 'xy': -0.011774612658873548, 'yz': -0.0015319520002690188, 'xz': -0.006979405419220597}, f = {'xx': 49.03458538877452, 'yy': 7.474161717563968, 'zz': 7.44127803009271, 'xy': -1.574745845491241, 'yz': -0.13886659182946812, 'xz': -0.6562127696177128}
+ load step = 4
+starting solve ...
+solve finished!
+starting postprocessing ...
+computing phase volumes with phase_data = dict_values([{'phase_number': 4, 'emod': 200, 'pois': 0.31}, {'phase_number': 10, 'emod': 380, 'pois': 0.23}])
+postprocessing finished!
+resulting elasticity from load step 4: e = {'xx': -0.0026613954375334747, 'yy': 0.0003756007769590984, 'zz': -2.6010949972020997e-17, 'xy': 0.09600727974272025, 'yz': -0.005343817221923181, 'xz': -0.001800390997373061}, f = {'xx': -1.0492253631556119, 'yy': -0.3681340043968532, 'zz': -0.26299320876834154, 'xy': 12.253219090229264, 'yz': -0.6634660626611882, 'xz': -0.1870733367832739}
+ load step = 5
+starting solve ...
+solve finished!
+starting postprocessing ...
+computing phase volumes with phase_data = dict_values([{'phase_number': 4, 'emod': 200, 'pois': 0.31}, {'phase_number': 10, 'emod': 380, 'pois': 0.23}])
+postprocessing finished!
+resulting elasticity from load step 5: e = {'xx': -4.244564177267412e-05, 'yy': -3.58053577243154e-17, 'zz': -0.0016364776624102615, 'xy': -0.0035473290268670686, 'yz': -0.011158977861604887, 'xz': 0.09427558282744307}, f = {'xx': -0.1232244750214385, 'yy': -0.24882348245770283, 'zz': -0.6787331693380301, 'xy': -0.42564068117869963, 'yz': -1.5126768969711466, 'xz': 12.055591997019272}
+ load step = 6
+starting solve ...
+solve finished!
+starting postprocessing ...
+computing phase volumes with phase_data = dict_values([{'phase_number': 4, 'emod': 200, 'pois': 0.31}, {'phase_number': 10, 'emod': 380, 'pois': 0.23}])
+postprocessing finished!
+resulting elasticity from load step 6: e = {'xx': -3.9169348871934905e-17, 'yy': 0.0009050527284765966, 'zz': -0.0008197034296014403, 'xy': -0.0027759186077493925, 'yz': 0.0966324957991722, 'xz': -0.004585966088990297}, f = {'xx': 0.02213000947475273, 'yy': 0.2601559454277717, 'zz': -0.2409621875690258, 'xy': -0.3607169839083467, 'yz': 12.415831020299287, 'xz': -0.6719926010552318}
+finished simulation of elasticity. 
+computing stiffness tensor and elastic constants.
+result = {'sigma': {1: {'xx': 7.617068607126356, 'yy': 7.187227381567212, 'zz': 50.234747144550546, 'xy': -0.5712951178177613, 'yz': -0.13001510165057661, 'xz': -0.9758884013792499}, 2: {'xx': 8.297134860842146, 'yy': 51.931023226414425, 'zz': 7.909562605052402, 'xy': -1.6368824401713933, 'yz': -0.22701197384633662, 'xz': -0.3900149989960177}, 3: {'xx': 49.03458538877452, 'yy': 7.474161717563968, 'zz': 7.44127803009271, 'xy': -1.574745845491241, 'yz': -0.13886659182946812, 'xz': -0.6562127696177128}, 4: {'xx': -1.0492253631556119, 'yy': -0.3681340043968532, 'zz': -0.26299320876834154, 'xy': 12.253219090229264, 'yz': -0.6634660626611882, 'xz': -0.1870733367832739}, 5: {'xx': -0.1232244750214385, 'yy': -0.24882348245770283, 'zz': -0.6787331693380301, 'xy': -0.42564068117869963, 'yz': -1.5126768969711466, 'xz': 12.055591997019272}, 6: {'xx': 0.02213000947475273, 'yy': 0.2601559454277717, 'zz': -0.2409621875690258, 'xy': -0.3607169839083467, 'yz': 12.415831020299287, 'xz': -0.6719926010552318}}, 'epsilon': {1: {'xx': -0.020587123229466823, 'yy': -0.02259800675473887, 'zz': 0.14397817099345245, 'xy': -0.004117598588688339, 'yz': -0.0012291092609747673, 'xz': -0.006765242173487876}, 2: {'xx': -0.02040973486773234, 'yy': 0.14726275768106709, 'zz': -0.021917865968426934, 'xy': -0.01000958288762658, 'yz': -0.0027561935279945826, 'xz': -0.0025464917784142286}, 3: {'xx': 0.14239550294365705, 'yy': -0.021652034221747996, 'zz': -0.02168482060973344, 'xy': -0.011774612658873548, 'yz': -0.0015319520002690188, 'xz': -0.006979405419220597}, 4: {'xx': -0.0026613954375334747, 'yy': 0.0003756007769590984, 'zz': -2.6010949972020997e-17, 'xy': 0.09600727974272025, 'yz': -0.005343817221923181, 'xz': -0.001800390997373061}, 5: {'xx': -4.244564177267412e-05, 'yy': -3.58053577243154e-17, 'zz': -0.0016364776624102615, 'xy': -0.0035473290268670686, 'yz': -0.011158977861604887, 'xz': 0.09427558282744307}, 6: {'xx': -3.9169348871934905e-17, 'yy': 0.0009050527284765966, 'zz': -0.0008197034296014403, 'xy': -0.0027759186077493925, 'yz': 0.0966324957991722, 'xz': -0.004585966088990297}}, 'v_phase': {4: 0.2771942844910385, 10: 0.7228057151957994}, 'stiffness_tensor': array([[ 3.84281908e+02,  1.30094435e+02,  1.29677527e+02,
+         3.36448162e-01,  1.47467358e+00, -6.78589178e-01],
+       [ 1.30094435e+02,  3.89546382e+02,  1.29250753e+02,
+         5.74852147e-01, -3.78720706e-01, -2.34601200e+00],
+       [ 1.29677527e+02,  1.29250753e+02,  3.87506667e+02,
+        -1.88619522e-02, -6.20244420e-01, -4.44487622e-01],
+       [ 3.36448162e-01,  5.74852147e-01, -1.88619522e-02,
+         1.28401744e+02, -8.98886172e-01,  7.14501170e-02],
+       [ 1.47467358e+00, -3.78720706e-01, -6.20244420e-01,
+        -8.98886172e-01,  1.27764385e+02,  3.94610136e-01],
+       [-6.78589178e-01, -2.34601200e+00, -4.44487622e-01,
+         7.14501170e-02,  3.94610136e-01,  1.27735374e+02]]), 'svd_ratio': 0.40822645098335636, 'voigt_avg': {'E': 321.09340546798853, 'nu': 0.25165258372539845, 'K': 215.48670962948566, 'G': 128.26778358587785}, 'reuss_avg': {'E': 321.0540169158897, 'nu': 0.2516642038626544, 'K': 215.47035768343713, 'G': 128.25085830732883}, 'hill_avg': {'E': 321.0737111919391, 'nu': 0.25165839379402644, 'K': 215.4785336564614, 'G': 128.25932094660334}}
+running simulation of elasticity
+ db_file = rve_1_mesh.db
+ phase_mat_params = {'ZrO2': {'phase_number': 4, 'emod': 200, 'pois': 0.31}, 'Al2O3': {'phase_number': 10, 'emod': 380, 'pois': 0.23}}
+ options = {'solver_tolerance': 0.01, 'delrot_factor': 0.0001, 'delshi_factor': 0.00015, 'boundary_nodes_selection_tolerance': 0.005}
+Setting up simulation with db_file = rve_1_mesh.db
+options = {'solver_tolerance': 0.01, 'delrot_factor': 0.0001, 'delshi_factor': 0.00015, 'boundary_nodes_selection_tolerance': 0.005}
+assigning material parameters to material number 4: ex = 200000000000.0, prxy = 0.31
+assigning material parameters to material number 10: ex = 380000000000.0, prxy = 0.23
+ load step = 1
+starting solve ...
+solve finished!
+starting postprocessing ...
+computing phase volumes with phase_data = dict_values([{'phase_number': 4, 'emod': 200, 'pois': 0.31}, {'phase_number': 10, 'emod': 380, 'pois': 0.23}])
+postprocessing finished!
+resulting elasticity from load step 1: e = {'xx': -0.021840318167039907, 'yy': -0.02254448377066583, 'zz': 0.1500001515268907, 'xy': 0.0002949450220308044, 'yz': -0.004869449817579172, 'xz': 0.0014971888068974967}, f = {'xx': 7.90881128808377, 'yy': 7.658106095210226, 'zz': 53.39172527611335, 'xy': -0.027207965450941143, 'yz': -0.335742468473396, 'xz': 0.2193279412812271}
+ load step = 2
+starting solve ...
+solve finished!
+starting postprocessing ...
+computing phase volumes with phase_data = dict_values([{'phase_number': 4, 'emod': 200, 'pois': 0.31}, {'phase_number': 10, 'emod': 380, 'pois': 0.23}])

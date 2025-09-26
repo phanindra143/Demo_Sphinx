@@ -1,0 +1,50 @@
+       ifx            fxx            fyy            fzz            fxy            fxz            fyz     
+/% source: R:\166_320\Ablage_Simulationen\Modellbildung_Simulation_CMC-SiC_[Vorlauf+WiMi+MaVo]\04_04_2017_Modellierung_Matrix_mikro_ditt_[WiMi]\1_Volumenanteil-SiC-Si_ELC\Poren-Corner-Edges-Faces\50-42-8\1
+        1.00000        0.01097        0.01319       35.92133       -0.03623        0.19710        0.04251
+/%
+       ifx            exx            eyy            ezz            exy            exz            eyz     
+/%
+        1.00000       -0.02889       -0.02871        0.15000       -0.00014       -0.00052       -0.00109
+/%
+       ifx            fxx            fyy            fzz            fxy            fxz            fyz     
+/%
+        2.00000        0.01150       35.98436        0.01293        0.13575       -0.04169        0.02558
+/%
+       ifx            exx            eyy            ezz            exy            exz            eyz     
+/%
+        2.00000       -0.02881        0.15000       -0.02875       -0.00019       -0.00003       -0.00072
+/%
+       ifx            fxx            fyy            fzz            fxy            fxz            fyz     
+/%
+        3.00000       35.56179        0.01287        0.01235        0.17731        0.12035       -0.00921
+/%
+       ifx            exx            eyy            ezz            exy            exz            eyz     
+/%
+        3.00000        0.15000       -0.02846       -0.02859        0.00056       -0.00037        0.00020
+/%
+       ifx            fxx            fyy            fzz            fxy            fxz            fyz     
+/%
+        4.00000        0.13546        0.12815        0.03654        9.91481        0.02880        0.09430
+/%
+       ifx            exx            eyy            ezz            exy            exz            eyz     
+/%
+        4.00000        0.00010       -0.00004        0.00000        0.10000       -0.00026        0.00007
+/%
+       ifx            fxx            fyy            fzz            fxy            fxz            fyz     
+/%
+        5.00000        0.13293        0.03064        0.15652        0.02079        9.89535        0.09101
+/%
+       ifx            exx            eyy            ezz            exy            exz            eyz     
+/%
+        5.00000       -0.00002        0.00000       -0.00021       -0.00034        0.10000        0.00039
+/%
+       ifx            fxx            fyy            fzz            fxy            fxz            fyz     
+/%
+        6.00000       -0.00465        0.01100        0.06435        0.09016        0.07927        9.97476
+/%
+       ifx            exx            eyy            ezz            exy            exz            eyz     
+/%
+        6.00000        0.00000       -0.00028       -0.00018        0.00005        0.00028        0.10000
+/%
+        0.50856        0.42920        0.00000        0.06224
+	/%

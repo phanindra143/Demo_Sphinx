@@ -1,0 +1,15 @@
+[2021-06-08 11:40:24,869 - VoxSM status - DEBUG] Switching to tab 0
+[2021-06-08 11:40:25,774 - VoxSM status - DEBUG] Switching to tab 1
+[2021-06-08 11:40:36,774 - VoxSM status - DEBUG] Switching to tab 2
+[2021-06-08 11:40:38,144 - VoxSM status - DEBUG] Switching to tab 3
+[2021-06-08 11:40:39,074 - VoxSM status - DEBUG] Launching VoxSM executable at 'U:\01_Ravi_Phanindra\mpaut\examples_new\..\bin\VoxSM_2017_x64.exe'
+[2021-06-08 11:40:39,074 - VoxSM status - INFO] Opening voxel file at path='U:\01_Ravi_Phanindra\mpaut\examples_new\Airfox_list_nobj_rvedim_32\nobj_80\rve_1\voxels.val'.
+[2021-06-08 11:40:40,444 - VoxSM status - DEBUG] Waiting for target_output='load  VOX ...done' with old_lines_count=3.
+[2021-06-08 11:40:41,039 - VoxSM status - INFO] Splitting regions.
+[2021-06-08 11:40:41,039 - VoxSM status - DEBUG] Switching to tab 0
+[2021-06-08 11:40:41,289 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='split VOX:' to appear
+[2021-06-08 11:40:41,698 - VoxSM status - DEBUG] Pressing confirm button with confirm_btn_text='OK'
+[2021-06-08 11:40:41,908 - VoxSM status - DEBUG] Waiting for target_output='split VOX::regions ...done' with old_lines_count=11.
+[2021-06-08 11:40:42,318 - VoxSM status - INFO] Generating mesh.
+[2021-06-08 11:40:42,318 - VoxSM status - DEBUG] Switching to tab 0
+[2021-06-08 11:40:42,528 - VoxSM status - DEBUG] Waiting for dialog with dialog_title='confirm' to appear

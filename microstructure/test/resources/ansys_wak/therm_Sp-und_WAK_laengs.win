@@ -1,0 +1,466 @@
+!/batch
+finish
+/clear
+/PREP7  
+
+
+!/input,_main,win,,,
+resume,work,db,,,
+
+!*** Definition material parameter ***
+*set,wak1,4.3          ! WAK SiC in 1/K 
+*set,wak2,2.6          ! WAK Si in 1/K 
+!*set,wak3x, -1.0
+!*set,wak3yz, 10
+!t_sinter,1200         ! sintern temperature (for thermal stresses)
+
+*set,t_raum,25		! "Einsatztemperatur", für die die thermischen Spannungen berechnet werden
+*set,t_solid,125	! Temperatur, bei der (bei Aufheizen von Raumtemp.) die Streckgrenze von Cobalt erreicht wird 
+					! bzw. Beginn des elastischen Verhaltens
+
+					
+					
+!*** Parameters ***
+nifx=3
+difx=1 
+
+ifEtable = 0
+Vol_rel = 0
+
+!*** Attribute material to different phases ***
+mp,alpx,matnum_1,wak1*1e-6
+mp,alpx,matnum_2,wak2*1e-6
+
+!mp,alpx,matnum_3,wak3x*1e-6
+!mp,alpy,matnum_3,wak3yz*1e-6
+!mp,alpz,matnum_3,wak3yz*1e-6
+
+save,test,db,,
+
+!*do,di,1,nifx,difx
+
+parsav,all,param1,fem
+resume,test,db,,,
+parres,new,param1,fem
+
+!ifx=%di%
+ifx=1
+
+!*** SET LOADS ***
+lsclear,all         !Löscht alle vorhandenen Randbedingungen
+					!Stringvariable für Koordinatenrichtungen einführen
+!
+v1='x'
+v2='y'
+v3='z'
+!
+*if,mod(ifx,3),eq,1,then
+  vx='x'
+  vy='y'
+  vz='z'
+*endif
+*if,mod(ifx,3),eq,2,then
+  vx='z'
+  vy='x'
+  vz='y'
+*endif
+*if,mod(ifx,3),eq,0,then
+  vx='y'
+  vy='z'
+  vz='x'
+*endif
+delver = Lx/200  !Längentoleranz für Selektion der Randknoten
+
+allsel,all
+finish
+/solu  
+
+    !* Temperaturdifferenz setzen
+    TUNIF,t_raum  	!Endtemperatur
+    TREF,t_solid   !Ausgangstemperatur
+*if,t_raum,LT,t_solid,then
+	mpamod,matnum_1,t_raum		! nötig, wenn Endtemperatur kleiner als TREF ist
+	mpamod,matnum_2,t_raum		! nötig, wenn Endtemperatur kleiner als TREF ist
+*endif		
+	
+	!! Innere Ebenen auf Verschiebung 0 setzen   
+
+	allsel,all  
+	nsel,s,loc,%vx%,0-delver,0+delver
+	d,all,u%vx%,0
+
+	allsel,all  
+	nsel,s,loc,%vy%,0-delver,0+delver
+	d,all,u%vy%,0
+
+	allsel,all  
+	nsel,s,LOC,%vz%,0-delver,0+delver
+	d,all,u%vz%,0
+	
+	!! Äußere Ebenen koppeln  
+	
+	allsel,all  
+	nsel,s,loc,%vx%,L%vx%-delver,L%vx%+delver  
+	cp,1,u%vx%,all
+	
+    allsel,all  
+	nsel,s,loc,%vy%,L%vy%-delver,L%vy%+delver  
+	cp,2,u%vy%,all
+
+	allsel,all
+	nsel,s,loc,%vz%,L%vz%-delver,L%vz%+delver  
+	cp,3,u%vz%,all	
+	
+
+!*** SOLVE ***
+allsel,all
+solcontrol,on   	 
+nsubst,1	 	       
+eqslv,jcg,1e-08
+/status,solu
+solve
+
+
+finish  
+/post1
+
+!*** SET POSTPROCESSING ***
+*if,Vol_rel,eq,0,then  
+
+  esel,s,mat,,matnum_1     !volumenanteil für Material "matnum_1" berechnen
+  esel,r,type,,1
+  etable,e_vol%matnum_1%,volu,
+  ssum
+  *get,v_mat%matnum_1%,ssum,0,item,e_vol%matnum_1%
+  etable,e_vol%matnum_1%,eras  
+
+  esel,s,mat,,matnum_2 !volumenanteil für Material "matnum_2" berechnen
+  esel,r,type,,1  
+  etable,e_vol%matnum_2%,volu,
+  ssum
+  *get,v_mat%matnum_2%,ssum,0,item,e_vol%matnum_2%
+  etable,e_vol%matnum_2%,eras
+  
+  esel,s,mat,,matnum_3 !volumenanteil für Material "matnum_3" berechnen
+  esel,r,type,,1  
+  etable,e_vol%matnum_3%,volu,
+  ssum
+  *get,v_mat%matnum_3%,ssum,0,item,e_vol%matnum_3%
+  etable,e_vol%matnum_3%,eras
+
+  !Volumen des Würfels bestimmen und Elementtabelle mit Volumen anlegen 
+  esel,s,mat,,matnum_1
+  esel,a,mat,,matnum_2
+  esel,a,mat,,matnum_3
+  etable,e_vol,volu,
+  ssum
+  *get,v_i,ssum,0,item,e_vol
+  v_ph%matnum_1%=v_mat%matnum_1%/v_i
+  v_ph%matnum_2%=v_mat%matnum_2%/v_i
+  v_ph%matnum_3%=v_mat%matnum_3%/v_i
+  
+  Vol_rel = 1
+*endif
+ 
+allsel,all  
+      nsel,r,loc,%vz%,L%vz%-delver,L%vz%+delver
+      nsort,u,%vz%  
+      *get,wakz,sort, ,max
+      wakz=wakz/(L%vz%*(t_raum-t_solid))
+      allsel,all  
+      nsel,r,loc,%vx%,L%vx%-delver,L%vx%+delver
+      nsort,u,%vx%  
+      *get,wakx,sort, ,max
+      wakx=wakx/(L%vx%*(t_raum-t_solid))
+      allsel,all 
+      nsel,r,loc,%vy%,L%vy%-delver,L%vy%+delver
+      nsort,u,%vy%  
+      *get,waky,sort, ,max
+      waky=waky/(L%vy%*(t_raum-t_solid))
+ 
+ 
+/eof
+ 
+  allsel  
+  etable,e_vol,volu,
+
+ ! *** thermal stresses and thermal expansion coefficient***
+     *if,if_poly,eq,0,then
+      ! ***averaged hydrostatic stress in mat 1 ***
+      allsel,all
+      esel,s,mat,,1
+      etable,e_vol,volu
+      etable,s1_m1,s,1
+      etable,s2_m1,s,2
+      etable,s3_m1,s,3
+      smult,s1_mult,s1_m1,e_vol
+      ssum
+      *get,s1_mat1,ssum,0,item,s1_mult
+      s1_mat1=s1_mat1/vhp 
+      smult,s2_mult,s2_m1,e_vol
+      ssum
+      *get,s2_mat1,ssum,0,item,s2_mult
+      s2_mat1=s2_mat1/vhp
+      smult,s3_mult,s3_m1,e_vol
+      ssum
+      *get,s3_mat1,ssum,0,item,s3_mult
+      s3_mat1=s3_mat1/vhp
+      hstr_m1=(s1_mat1+s2_mat1+s3_mat1)/3
+      !
+      ! ***averaged hydrostatic stress in mat 2 ***
+      allsel,all
+      esel,s,mat,,2
+      etable,e_vol,volu
+      etable,s1_m2,s,1
+      etable,s2_m2,s,2
+      etable,s3_m2,s,3
+      smult,s1_mult,s1_m2,e_vol
+      ssum
+      *get,s1_mat2,ssum,0,item,s1_mult
+      s1_mat2=s1_mat2/vsp
+      smult,s2_mult,s2_m2,e_vol
+      ssum
+      *get,s2_mat2,ssum,0,item,s2_mult
+      s2_mat2=s2_mat2/vsp
+      smult,s3_mult,s3_m2,e_vol
+      ssum
+      *get,s3_mat2,ssum,0,item,s3_mult
+      s3_mat2=s3_mat2/vsp
+      hstr_m2=(s1_mat2+s2_mat2+s3_mat2)/3
+      !
+      *if,if_thres,eq,1,then
+        /input,th_stresses,win,./subprogr,,
+        dummy=0
+        *if,dummy,eq,1,then
+          ! ***averaged first principal stress in mat 1 at neck area***
+          allsel,all
+          cmsel,s,neck_ar
+          nsla,s,1
+          esln,s
+          esel,r,mat,,1
+          *get,ne1,elem,0,count 
+          etable,n_s1,s,1
+          ssum
+          *get,s1_nar1,ssum,0,item,n_s1
+          s1_nar1=s1_nar1/ne1
+          allsel,all
+          ! ***averaged first principal stress in mat 2 at neck area***
+          allsel,all
+          cmsel,s,neck_ar
+          nsla,s,1
+          esln,s
+          esel,r,mat,,2
+          *get,ne2,elem,0,count 
+          etable,n_s2,s,1
+          ssum
+          *get,s1_nar2,ssum,0,item,n_s2
+          s1_nar2=s1_nar2/ne2
+          allsel,all
+        *endif
+      *endif
+      ! *** thermal expansion coefficient***
+      allsel,all  
+      nsel,r,loc,%vz%,L%vz%-delver,L%vz%+delver
+      nsort,u,%vz%  
+      *get,wakz,sort, ,max
+      wakz=wakz/(L%vz%*(t_raum-t_solid))
+      allsel,all  
+      nsel,r,loc,%vx%,L%vx%-delver,L%vx%+delver
+      nsort,u,%vx%  
+      *get,wakx,sort, ,max
+      wakx=wakx/(L%vx%*(t_raum-t_solid))
+      allsel,all 
+      nsel,r,loc,%vy%,L%vy%-delver,L%vy%+delver
+      nsort,u,%vy%  
+      *get,waky,sort, ,max
+      waky=waky/(L%vy%*(t_raum-t_solid))
+    *endif
+
+  ! ***********  ??????????  **********
+     tit = 'poly_SIM:'                       !poly:
+      outFname = '%ifprop0infn_base%.Ej.sigRC.poly'
+      fend = 'Aerg'
+      divnum=daux
+      enumtot=nelem    
+    *endif      
+    latC=l
+    *if,newCalc,eq,0,then
+      methodS= 'Volu-mean (j,E)'    
+    *elseif,newCalc,eq,1,then
+      methodS= 'Volu-mean (j), Node-mean dU (E)'    
+    *endif        
+    !         
+    /output,outFname,fend,./results_sim,  !new file
+    *vwrite,tit
+    %11c
+    *vwrite,'-----------'
+    %12c    
+    *vwrite, methodS
+    %40c
+    *vwrite,'latC =', latC
+    %7c, %10.3g
+    *vwrite,'divnum =', divnum
+    %9c, %3i 
+    *vwrite,'tot.Nr. of Elements =', enumtot
+    %22c, %10i
+    *vwrite,'structure:', '%structFileName%%geoEnd%'
+    %11c, %60c
+    *vwrite,'frq [Hz]:'
+    %10c
+    *vwrite,'f_min =',f_min
+    %9c, %10.2g
+    *vwrite,'f_max =',f_max
+    %9c, %10.2g
+    *vwrite,'f_fac =    ',f_fac
+    %9c, %10.2g
+    !
+    /status,solu
+    !
+    *vwrite,'[DATA]:'
+    %7c    
+    !                 
+/output, term   
+
+ *if,ifgeo,eq,20,then
+        *if,if_randm,eq,1,then
+          /output,out_tens,out,,append,
+          *vwrite,'s1sum_1','s2sum_1','s3sum_1','sxsum_1','sysum_1','szsum_1',
+          (6A9)
+          *vwrite
+          %/
+          *vwrite,s1sum_1,s2sum_1,s3sum_1,sxsum_1,sysum_1,szsum_1,
+          (6F20.4)
+          *vwrite        
+          /%
+          /output, term 
+         *else
+        /output,out_tens,out,,append,
+        *vwrite,'s1sum_1','s2sum_1','s3sum_1','s1sum_2','s2sum_2','s3sum_2','s1sum_3','s2sum_3','s3sum_3',
+        (9A9)
+        *vwrite
+        %/
+        *vwrite,s1sum_1,s2sum_1,s3sum_1,s1sum_2,s2sum_2,s3sum_2,s1sum_3,s2sum_3,s3sum_3,
+        (9F20.4)
+        *vwrite
+        /%
+        *vwrite,'stot_1','stot_2','stot_3','pres_1','pres_2','pres_3','fric_1','fric_2','fric_3',
+        (9A9)
+        *vwrite
+        /%
+        *vwrite,stot_1,stot_2,stot_3,pres_1,pres_2,pres_3,fric_1,fric_2,fric_3,
+        (9F20.4)
+        *vwrite
+        /%
+        ! *** contact ***
+        !
+        *vwrite,'s1_mc_a1','s1_sc_a1','mxs1c_a1','s2_mc_a1','s2_sc_a1','mxs2c_a1','s3_mc_a1','s3_sc_a1','mxs3c_a1',
+        (9A9)
+        *vwrite
+        %/
+        *vwrite,s1_mc_a1,s1_sc_a1,mxs1c_a1,s2_mc_a1,s2_sc_a1,mxs2c_a1,s3_mc_a1,s3_sc_a1,mxs3c_a1,
+        (9F18.4)
+        *vwrite
+        /%
+        *vwrite,'st_mc_a1','st_sc_a1','mxstc_a1','pr_mc_a1','pr_sc_a1','mxprc_a1','fr_mc_a1','fr_sc_a1','mxfrc_a1',
+        (9A9)
+        *vwrite
+        %/
+        *vwrite,st_mc_a1,st_sc_a1,mxstc_a1,pr_mc_a1,pr_sc_a1,mxprc_a1,fr_mc_a1,fr_sc_a1,mxfrc_a1,
+        (9F18.4)
+        *vwrite
+        /%
+        *vwrite,'s1_mc_a2','s1_sc_a2','mxs1c_a2','s2_mc_a2','s2_sc_a2','mxs2c_a2','s3_mc_a2','s3_sc_a2','mxs3c_a2',
+        (9A9)
+        *vwrite
+        %/
+        *vwrite,s1_mc_a2,s1_sc_a2,mxs1c_a2,s2_mc_a2,s2_sc_a2,mxs2c_a2,s3_mc_a2,s3_sc_a2,mxs3c_a2,
+        (9F18.4)
+        *vwrite
+        /%
+        *vwrite,'st_mc_a2','st_sc_a2','mxstc_a2','pr_mc_a2','pr_sc_a2','mxprc_a2','fr_mc_a2','fr_sc_a2','mxfrc_a2',
+        (9A9)
+        *vwrite
+        %/
+        *vwrite,st_mc_a2,st_sc_a2,mxstc_a2,pr_mc_a2,pr_sc_a2,mxprc_a2,fr_mc_a2,fr_sc_a2,mxfrc_a2,
+        (9F18.4)
+        *vwrite
+        /%
+        *vwrite,'s1_mc_a3','s1_sc_a3','mxs1c_a3','s2_mc_a3','s2_sc_a3','mxs2c_a3','s3_mc_a3','s3_sc_a3','mxs3c_a3',
+        (9A9)
+        *vwrite
+        %/
+        *vwrite,s1_mc_a3,s1_sc_a3,mxs1c_a3,s2_mc_a3,s2_sc_a3,mxs2c_a3,s3_mc_a3,s3_sc_a3,mxs3c_a3,
+        (9F18.4)
+        *vwrite
+        %/
+        *vwrite,'st_mc_a3','st_sc_a3','mxstc_a3','pr_mc_a3','pr_sc_a3','mxprc_a3','fr_mc_a3','fr_sc_a3','mxfrc_a3',
+        (9A9)
+        *vwrite
+        %/
+        *vwrite,st_mc_a3,st_sc_a3,mxstc_a3,pr_mc_a3,pr_sc_a3,mxprc_a3,fr_mc_a3,fr_sc_a3,mxfrc_a3,
+        (9F18.4)
+        *vwrite
+        %/
+        ! *** target ***
+        !
+        *vwrite,'s1_mt_a1','s1_st_a1','mxs1t_a1','s2_mt_a1','s2_st_a1','mxs2t_a1','s3_mt_a1','s3_st_a1','mxs3t_a1',
+        (9A9)
+        *vwrite
+        %/
+        *vwrite,s1_mt_a1,s1_st_a1,mxs1t_a1,s2_mt_a1,s2_st_a1,mxs2t_a1,s3_mt_a1,s3_st_a1,mxs3t_a1,
+        (9F18.4)
+        *vwrite
+        /%
+        *vwrite,'s1_mt_a2','s1_st_a2','mxs1t_a2','s2_mt_a2','s2_st_a2','mxs2t_a2','s3_mt_a2','s3_st_a2','mxs3t_a2',
+        (9A9)
+        *vwrite
+        %/
+        *vwrite,s1_mt_a2,s1_st_a2,mxs1t_a2,s2_mt_a2,s2_st_a2,mxs2t_a2,s3_mt_a2,s3_st_a2,mxs3t_a2,
+        (9F18.4)
+        *vwrite
+        /%
+        *vwrite,'s1_mt_a3','s1_st_a3','mxs1t_a3','s2_mt_a3','s2_st_a3','mxs2t_a3','s3_mt_a3','s3_st_a3','mxs3t_a3',
+        (9A9)
+        *vwrite
+        %/
+        *vwrite,s1_mt_a3,s1_st_a3,mxs1t_a3,s2_mt_a3,s2_st_a3,mxs2t_a3,s3_mt_a3,s3_st_a3,mxs3t_a3,
+        (9F18.4)
+        *vwrite
+        /%
+        /output, term 
+         *endif  
+      *else
+        /output,out_hist,out,,append,
+        *vwrite,'S1LVHP','S1LVSP','S1_ARI','S1_ARE','S1_IAR',
+        (5A9)
+        ! Case of simple structures: 
+        ! S1LVHP - first principal stresses for lines attached to vhp
+        ! S1LVSP - first principal stresses for lines attached to vsp
+        ! S1_ARI - first principal stresses for internal areas
+        ! S1_ARE - first principal stresses for external areas
+        ! S1_IAR - first principal stresses for interfacial areas
+        *vwrite
+        %/
+        *vwrite,s1lvhp,s1lvsp,s1ari,s1are,s1iar,
+        (5F18.5)
+        *vwrite
+        /%
+        /output, term   
+
+  /output,out_w_e,out,,append,
+   *vwrite,'Wlf.','E_Mod.','Pois','S_int','VHP','Necka','Sphi','Sym.','If_x','RelV.','Shift','Rep.','Hom.','Minar','S_hp2','S_hp21','n-Kont'
+     (17A9)
+   *vwrite
+   %/
+  !/output,term
+  !/output,out_w_e,out,,append,
+   *vwrite,wlz1,sigz,poisx,sigmax,vhp,neck_ar,sph_int,n_sym,ifx,rel_vol,d_shift,if_repel,if_inho,mo,s_hp2,s_hp21,tnko_avg
+   (17F9.5)
+   *vwrite
+    /%
+  /output, term   !/%
+*endif  !ifprop<>0
+        
+*enddo
+save,sol_ths,db,,,
+    

@@ -1,0 +1,69 @@
+!created by  VoxSM [HTL,gs,2017]
+!gMesh (base): C:\Users\pirkelma\Desktop\local_git_repos\workflow_automation\output\voxels
+
+!---------- header ----------
+finish
+/clear
+/Filname, mesh
+/prep7
+
+!ETs  (keep type-numbers!)
+et,1,solid187    ! 3D tet (4-10 nodes)
+et,2,SHELL157    ! GB-shell 
+et,3,SHELL157    ! RVE-shell (seperate delete)
+et,4,Targe170    ! Targe
+et,5,Conta174,  !6! Conta (keyopt1=6: DOF=VOLT)
+et,6,solid231    ! solid GB prisms
+
+real,1            ! Real(1)= Shell thickness (GB)
+MOpt,TetExpnd,2   ! < 3(!)
+Shpp,silent,on
+MshMid,2          !no Midnodes, prevent meshing-errors.  -> add later(!)
+
+!MPs: (MatNr.)
+!   '0' -> '10 000',	         = pores
+!   Shell/Plane -> '20 000'   = GBs in-plane conductivity
+!   CT: real-constant 'ecc'   = GBs through-plane conductance
+!   solid-GB = 100*PartMat    = GB lossy-Dielectric
+
+
+!---------- input ----------
+
+structFileName = 'voxels'
+Lx = 3.2E-05  !Lx-Box
+
+Ly = 3.2E-05  !Ly-Box
+
+Lz = 3.2E-05  !Lz-Box
+
+! 24925 nodes:
+/input,'1_nodes','win', 
+
+! 21672 solid GB-Elements (prisms, hGB=1E-10)
+! hGB ~ 9.89e-11 +- 2.37e-12  in [6.50e-11; 1.35e-10]
+!  -> for each particle => hGB(p1-p2) = hGB(p1)+hGB(p2).
+hGB = 9.89444e-11
+/input,'2_GB_Prisms','win', 
+
+! 48586 GB + RVE Shells(CMs) (triangles)
+/input,'3_SHELL_GB_RVE','win', 
+
+! 30 Vmesh CMs (particles)
+keepShells = 0   !keep(1)/delete(0) Shells in FVmesh,
+/input,'4_CMs_mesh','win',
+
+!2 Materials (+ GB-Mat = 100*PartMat):
+!  1
+!  10000
+
+!---------- end ----------
+
+esel,s,type,,1
+esel,a,type,,6   !all solid
+EMid,add   !add Midnodes to all (sel.) Elements
+
+ETdele,2,5      !needed DOFs only(!), delete '2-5'
+
+allsel
+save,structFileName,db,,model
+
